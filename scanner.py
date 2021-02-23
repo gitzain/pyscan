@@ -1,40 +1,36 @@
-import sys, subprocess, pkg_resources, os, urllib.request
+import os, sys, pkg_resources, subprocess, urllib.request
 
-def install_prerequisties():
-    required = {'safety'}
-    installed = {pkg.key for pkg in pkg_resources.working_set}
-    missing = required - installed
+def install_vulnerability_scanner():
+    installed_packages = {pkg.key for pkg in pkg_resources.working_set}
+    if 'safety' not in installed_packages:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
 
-    if missing:
-        python = sys.executable
-        subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
+def refresh_vulnerability_database():
+    insecure_file = 'safety-db/insecure.json'
+    insecure_full_file = 'safety-db/insecure_full.json'
 
-def update_vulnerability_database():
-    os.system('mkdir -p safety-db')
-    urllib.request.urlretrieve('https://raw.githubusercontent.com/pyupio/safety-db/master/data/insecure.json', 'safety-db/insecure.json')
-    urllib.request.urlretrieve('https://raw.githubusercontent.com/pyupio/safety-db/master/data/insecure_full.json', 'safety-db/insecure_full.json')
+    try:
+        os.system('mkdir -p safety-db')
+        urllib.request.urlretrieve('https://raw.githubusercontent.com/pyupio/safety-db/master/data/insecure.json', insecure_file)
+        urllib.request.urlretrieve('https://raw.githubusercontent.com/pyupio/safety-db/master/data/insecure_full.json', insecure_full_file)
+    except:
+        if not os.path.exists(insecure_file) or not os.path.exists(insecure_full_file):
+            sys.exit(1)
+
+def package_name_and_version(filename):
+    filename_without_extention = filename.replace('.tar.gz', '').replace('.whl', '')
+    return "==".join(filename_without_extention.split("-", 2)[:2])
 
 def scan(directory="."):
-    install_prerequisties()
-    update_vulnerability_database()
-
-    bad_packages = []
-
     for path, subdirs, files in os.walk(directory):
-        for name in files:
-            if name.endswith('.whl') or name.endswith('.tar.gz'):
-                filename = os.path.join(path, name)
-                packagename_and_version = "==".join(name.split("-", 2)[:2])
-
-                if os.system('echo "' + packagename_and_version + '" | safety check --stdin --db=safety-db --bare'):
-                    os.remove(filename)
-                    bad_packages.append(packagename_and_version)
-
-    return bad_packages
-
+        for filename in files:
+            if filename.endswith('.whl') or filename.endswith('.tar.gz'):
+                if os.system('echo "' + package_name_and_version(filename) + '" | safety check --stdin --db=safety-db --bare'):
+                    package_location = os.path.join(path, filename)
+                    os.remove(package_location)
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        scan(sys.argv[1])
-    else:
-        scan()
+    install_vulnerability_scanner()
+    refresh_vulnerability_database()
+    scan(sys.argv[1])
+    sys.exit()

@@ -18,6 +18,7 @@ To run from the commandline:
 1. Save the scanner.py file to a directory of your choice
 2. Open and run terminal/powershell to the directory you just saved scanner.py
 3. Run `python scanner.py "/path/to/python/packages"` replace the string at the end with the path to the directory with the python packages. Any packages with vulnerabilities will be deleted and a list of the packages that were deleted will be returned.
+Note: You can use `python -m pip download -r requirements.txt -d .` to download some test files.
 
 ## Contributing
 1. Fork it!
