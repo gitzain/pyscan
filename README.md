@@ -2,15 +2,13 @@
 PyScan quickly and easily scanners a folder full of python packages for vulnerabilities.
 
 ## Table of content
-
-- [PyScan](#pyscan)
-  - [Table of content](#table-of-content)
-  - [Motivation](#motivation)
-  - [Installation \& Usage](#installation--usage)
-  - [Contributing](#contributing)
-  - [History](#history)
-  - [Credits](#credits)
-  - [License](#license)
+- [Table of content](#table-of-content)
+- [Motivation](#motivation)
+- [Installation \& Usage](#installation--usage)
+- [Contributing](#contributing)
+- [History](#history)
+- [Credits](#credits)
+- [License](#license)
 
 ## Motivation
 Needed a way to scan Python packages for vulnerabilities as a part of a CI/CD pipeline.
