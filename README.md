@@ -1,5 +1,5 @@
 # PyScan
-PyScan quickly and easily scanners a folder full of python packages for vulnerabilities.
+PyScan quickly and easily scans a folder full of python packages for vulnerabilities.
 
 ## Table of content
 - [Table of content](#table-of-content)
