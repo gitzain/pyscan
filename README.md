@@ -3,21 +3,23 @@ PyScan quickly and easily scanners a folder full of python packages for vulnerab
 
 ## Table of content
 
-- [Motivation](#motivation)
-- [Installation & Usage](#installation--usage)
-- [Contributing](#contributing)
-- [History](#history)
-- [Credits](#credits)
-- [License](#license)
+- [PyScan](#pyscan)
+  - [Table of content](#table-of-content)
+  - [Motivation](#motivation)
+  - [Installation \& Usage](#installation--usage)
+  - [Contributing](#contributing)
+  - [History](#history)
+  - [Credits](#credits)
+  - [License](#license)
 
 ## Motivation
-TODO: Describe why this project exists
+Needed a way to scan Python packages for vulnerabilities as a part of a CI/CD pipeline.
 
 ## Installation & Usage
 To run from the commandline:
-1. Save the scanner.py file to a directory of your choice
+1. Save the pyscan.py file to a directory of your choice
 2. Open and run terminal/powershell to the directory you just saved scanner.py
-3. Run `python scanner.py "/path/to/python/packages"` replace the string at the end with the path to the directory with the python packages. Any packages with vulnerabilities will be deleted and a list of the packages that were deleted will be returned.
+3. Run `python pyscan.py "/path/to/python/packages"` replace the string at the end with the path to the directory with the python packages. Any packages with vulnerabilities will be deleted and a list of the packages that were deleted will be returned.
 Note: You can use `python -m pip download -r requirements.txt -d .` to download some test files.
 
 ## Contributing
@@ -28,7 +30,7 @@ Note: You can use `python -m pip download -r requirements.txt -d .` to download 
 5. Submit a pull request :D
 
 ## History
-V1: Initial release
+23/02/21: V1 Initial release
 
 ## Credits
 - Template for this README is <a href="https://github.com/gitzain/template-README">Template-README</a> created by <a href="https://iamzain.com">Zain Khan</a>
